@@ -29,9 +29,16 @@ const getAllRooms = () => {
     });
 }
 
+const getOneRoom = (id) => {
+    return new Promise((resolve, reject) => {
+        ChatRoomModel.findById(id).then(room => resolve(room)).catch(reject);
+    });
+}
+
 module.exports = {
     signUp,
     login,
     createRoom,
-    getAllRooms
+    getAllRooms,
+    getOneRoom
 }
