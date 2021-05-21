@@ -22,4 +22,29 @@ router.post('/user/login', (req, res) => {
         .catch(() => res.send("Failed").status(404))
 });
 
+router.post('/room/create', (req, res) => {
+    let name = req.body.name;
+    let description = req.body.description;
+    let host = {
+        name: req.body.hostname,
+        email: req.body.hostemail
+    }
+
+    mongo.createRoom(name, description, host)
+        .then(room => res.send(room).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
+router.get('/room', (req, res) => {
+    mongo.getAllRooms()
+        .then(rooms => res.send(rooms).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
+router.get('/room/:id', (req, res) => {
+    mongo.getOneRoom(req.params.id)
+        .then(room => res.send(room).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
 module.exports = router;
