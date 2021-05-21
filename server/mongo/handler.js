@@ -16,7 +16,15 @@ const login = (email, password) => {
     });
 }
 
+const createRoom = (name, description, host) => {
+    return new Promise((resolve, reject) => {
+        const room = new ChatRoomModel({ name, description, host, chats: [], users: [] });
+        room.save().then(roomData => resolve(roomData)).catch(() => reject());
+    });
+}
+
 module.exports = {
     signUp,
-    login
+    login,
+    createRoom
 }
