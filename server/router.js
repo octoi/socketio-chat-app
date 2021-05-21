@@ -41,4 +41,10 @@ router.get('/room', (req, res) => {
         .catch(() => res.send("Failed").status(404))
 });
 
+router.get('/room/:id', (req, res) => {
+    mongo.getOneRoom(req.params.id)
+        .then(room => res.send(room).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
 module.exports = router;
