@@ -2,7 +2,8 @@ const { model, Schema } = require("mongoose");
 
 const userSchema = new Schema({
     name: String,
-    email: String
+    email: String,
+    password: String,
 })
 
 const chatRoomSchema = new Schema({
@@ -19,5 +20,5 @@ const chatRoomSchema = new Schema({
 const UserModel = model('users', userSchema);
 const ChatRoomModel = model('chats', chatRoomSchema);
 
-model.exports = { UserModel, ChatRoomModel }
+module.exports = { UserModel, ChatRoomModel }
 
