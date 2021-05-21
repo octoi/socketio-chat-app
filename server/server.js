@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const router = require("./router");
 
 const app = express();
+
+app.use(express.json())
 app.use("/", router);
 
 const mongodbURL = process.env.MONGODB || "mongodb://localhost:27017/chatapp";
