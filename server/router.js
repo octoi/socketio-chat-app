@@ -35,4 +35,10 @@ router.post('/room/create', (req, res) => {
         .catch(() => res.send("Failed").status(404))
 });
 
+router.get('/room', (req, res) => {
+    mongo.getAllRooms()
+        .then(rooms => res.send(rooms).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
 module.exports = router;
