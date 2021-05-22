@@ -35,10 +35,17 @@ const getOneRoom = (id) => {
     });
 }
 
+const deleteOneRoom = (id) => {
+    return new Promise((resolve, reject) => {
+        ChatRoomModel.deleteOne({ _id: id }).then(data => resolve(data)).catch(reject);
+    });
+}
+
 module.exports = {
     signUp,
     login,
     createRoom,
     getAllRooms,
-    getOneRoom
+    getOneRoom,
+    deleteOneRoom
 }
