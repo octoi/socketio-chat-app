@@ -50,7 +50,7 @@ router.get('/room/:id', (req, res) => {
 });
 
 router.delete('/room/:id', (req, res) => {
-    mongo.deleteOneRoom(req.params.id)
+    mongo.deleteOneRoom(req.params.id, req.body.email)
         .then(data => res.send(data).status(200))
         .catch(() => res.send("Failed").status(404))
 });
