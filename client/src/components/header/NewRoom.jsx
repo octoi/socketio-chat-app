@@ -16,7 +16,7 @@ export default function NewRoom({ isOpen, onClose }) {
     }, [roomName, roomDescription]);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Create New Room</ModalHeader>
