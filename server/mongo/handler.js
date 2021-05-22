@@ -35,9 +35,15 @@ const getOneRoom = (id) => {
     });
 }
 
-const deleteOneRoom = (id) => {
+const deleteOneRoom = (id, email) => {
     return new Promise((resolve, reject) => {
-        ChatRoomModel.deleteOne({ _id: id }).then(data => resolve(data)).catch(reject);
+        getOneRoom(id).then(room => {
+            if (room.host.email == email) {
+                ChatRoomModel.deleteOne({ _id: id }).then(data => resolve(data)).catch(reject);
+                return;
+            }
+            reject();
+        }).catch(reject)
     });
 }
 
