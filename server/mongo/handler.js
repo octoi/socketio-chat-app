@@ -47,11 +47,32 @@ const deleteOneRoom = (id, email) => {
     });
 }
 
+// user & room
+
+const joinRoom = (id, user) => {
+    return new Promise(async (resolve, reject) => {
+        const room = await ChatRoomModel.findById(id);
+
+        if (!room) {
+            reject();
+        } else {
+            let users = room.users;
+            users.push(user);
+            room.users = users;
+
+            await room.save();
+            resolve(room);
+        }
+
+    });
+}
+
 module.exports = {
     signUp,
     login,
     createRoom,
     getAllRooms,
     getOneRoom,
-    deleteOneRoom
+    deleteOneRoom,
+    joinRoom,
 }
