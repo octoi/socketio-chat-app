@@ -1,9 +1,10 @@
+import ChakraWrap from './wrappers/ChakraWrap';
 import './App.css';
 
 function App() {
     return (
-        <div className="App">
-        </div>
+        <ChakraWrap>
+        </ChakraWrap>
     );
 }
 
