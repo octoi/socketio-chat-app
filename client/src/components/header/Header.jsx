@@ -10,8 +10,8 @@ export default function Header() {
     return (
         <Container marginTop="30px" maxW="container.xl" display="flex" justifyContent="space-between">
             <Text fontSize="xl" fontWeight="semibold">CH4T4PP</Text>
-            {user && <Button disabled>Login To Continue</Button>}
-            {!user && (
+            {!user && <Button disabled>Login To Continue</Button>}
+            {user && (
                 <Menu>
                     <MenuButton as={Button}>username</MenuButton>
                     <MenuList>
