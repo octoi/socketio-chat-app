@@ -22,6 +22,8 @@ router.post('/user/login', (req, res) => {
         .catch(() => res.send("Failed").status(404))
 });
 
+// rooms
+
 router.post('/room/create', (req, res) => {
     let name = req.body.name;
     let description = req.body.description;
@@ -44,6 +46,12 @@ router.get('/room', (req, res) => {
 router.get('/room/:id', (req, res) => {
     mongo.getOneRoom(req.params.id)
         .then(room => res.send(room).status(200))
+        .catch(() => res.send("Failed").status(404))
+});
+
+router.delete('/room/:id', (req, res) => {
+    mongo.deleteOneRoom(req.params.id)
+        .then(data => res.send(data).status(200))
         .catch(() => res.send("Failed").status(404))
 });
 
