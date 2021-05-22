@@ -1,5 +1,5 @@
 import ChakraWrap from './wrappers/ChakraWrap';
-import Context from './wrappers/Context';
+import { Context } from './wrappers/Context';
 import './App.css';
 
 function App() {
