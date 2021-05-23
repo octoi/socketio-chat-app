@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Flex, Heading, Input } from '@chakra-ui/react';
+import { Button, Container, Flex, Heading, Input, Spinner, useToast } from '@chakra-ui/react';
 import { loginUser, registerUser } from '../api/authFunctions';
 import { useHistory } from 'react-router-dom';
 import useAppContext from '../hooks/useAppContext';
@@ -7,12 +7,14 @@ import useAppContext from '../hooks/useAppContext';
 export default function Form() {
     const [isRegisterForm, setIsRegisterForm] = useState(false);
     const [canSubmit, setCanSubmit] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
     const { setUser, user } = useAppContext();
     const history = useHistory();
+    const toast = useToast();
 
     useEffect(() => {
         if (user) history.push("/");
@@ -32,18 +34,35 @@ export default function Form() {
     }, [userName, userEmail, userPassword, isRegisterForm]);
 
     const login = () => {
+        setIsLoading(true)
         loginUser({ email: userEmail, password: userPassword }).then(data => {
             delete data?.password;
             setUser(data)
-        })
+        }).catch((msg) => {
+            toast({
+                status: "error",
+                description: msg ? "Your username or password is incorrect 😓" : "Oops something went wrong 🤐",
+                isClosable: true,
+            });
+        });
+        setIsLoading(false)
     }
 
     const register = () => {
+        setIsLoading(true)
         const userData = { email: userEmail, password: userPassword, name: userName };
         registerUser(userData).then(() => {
             delete userData.password;
             setUser(userData)
-        })
+        }).catch((msg) => {
+            toast({
+                status: "error",
+                description: msg ? "Seems like there is an user with same email 😐" : "Oops something went wrong 🤐",
+                isClosable: true,
+                position: "top-right"
+            });
+        });
+        setIsLoading(false)
     }
 
     return (
@@ -59,6 +78,7 @@ export default function Form() {
                             type="text"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
+                            disabled={isLoading}
                         />
                     )}
                     <Input
@@ -68,6 +88,7 @@ export default function Form() {
                         type="email"
                         value={userEmail}
                         onChange={(e) => setUserEmail(e.target.value)}
+                        disabled={isLoading}
                     />
                     <Input
                         placeholder="••••••••"
@@ -76,9 +97,10 @@ export default function Form() {
                         type="password"
                         value={userPassword}
                         onChange={(e) => setUserPassword(e.target.value)}
+                        disabled={isLoading}
                     />
                     <Button disabled={!canSubmit} colorScheme="teal" mb={6} onClick={isRegisterForm ? register : login}>
-                        {isRegisterForm ? "Register" : "Log In"}
+                        {isLoading ? <Spinner /> : isRegisterForm ? "Register" : "Log In"}
                     </Button>
                     <Button variant="link" onClick={() => setIsRegisterForm(!isRegisterForm)}>
                         {isRegisterForm ? "Already have an account ?? login" : "Don't have an account ?? register"}

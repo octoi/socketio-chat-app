@@ -8,7 +8,7 @@ export const loginUser = (userData) => {
 
         axios.post(url, userData).then(res => {
             if (res.data.status) resolve(res.data.message);
-            else reject();
+            else reject(res.data.message);
         }).catch(reject)
     });
 }
@@ -20,7 +20,7 @@ export const registerUser = (userData) => {
 
         axios.post(url, userData).then(res => {
             if (res.data.status) resolve(res.data.message);
-            else reject();
+            else reject(res.data.message);
         }).catch(reject)
     });
 }

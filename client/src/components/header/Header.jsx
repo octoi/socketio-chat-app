@@ -1,10 +1,10 @@
 import React from 'react';
 import useAppContext from '../../hooks/useAppContext';
 import NewRoom from './NewRoom';
-import { Container, Button, Text, Menu, MenuButton, MenuList, MenuItem, useDisclosure, Progress } from '@chakra-ui/react';
+import { Container, Button, Text, Menu, MenuButton, MenuList, MenuItem, useDisclosure } from '@chakra-ui/react';
 
 export default function Header() {
-    const { user, logout, isLoading } = useAppContext();
+    const { user, logout } = useAppContext();
     const { isOpen, onClose, onOpen } = useDisclosure();
 
     return (

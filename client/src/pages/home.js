@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Container } from '@chakra-ui/react';
 
 export default function Home() {
     return (
-        <div>
-        </div>
+        <Container marginTop="30px" maxW="container.xl">
+            Home content
+        </Container>
     )
 }
