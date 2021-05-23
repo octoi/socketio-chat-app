@@ -20,7 +20,7 @@ export default function Form() {
         const urlParams = new URLSearchParams(window.location.search);
         const isRegister = urlParams.get("type") === "register";
         setIsRegisterForm(isRegister);
-    }, [user]);
+    }, [user, history]);
 
     useEffect(() => {
         if (userEmail.trim().length === 0 || userPassword.length < 6 || (isRegisterForm && userName.trim().length === 0)) {
