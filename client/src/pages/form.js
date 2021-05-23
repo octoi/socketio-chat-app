@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Flex, Heading, Input } from '@chakra-ui/react';
+import { loginUser, registerUser } from '../api/authFunctions';
 
 export default function Form() {
     const [isRegisterForm, setIsRegisterForm] = useState(false);
@@ -7,6 +8,7 @@ export default function Form() {
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
+
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -24,10 +26,14 @@ export default function Form() {
     }, [userName, userEmail, userPassword, isRegisterForm]);
 
     const login = () => {
-        alert("login")
+        loginUser({ email: userEmail, password: userPassword }).then(data => {
+            console.log(data)
+        })
     }
     const register = () => {
-        alert("register")
+        registerUser({ email: userEmail, password: userPassword, name: userName }).then(data => {
+            console.log(data)
+        })
     }
 
     return (
