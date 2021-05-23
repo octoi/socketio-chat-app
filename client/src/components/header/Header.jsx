@@ -13,7 +13,7 @@ export default function Header() {
             {!user && <Button disabled>Login To Continue</Button>}
             {user && (
                 <Menu>
-                    <MenuButton as={Button}>username</MenuButton>
+                    <MenuButton as={Button}>{user.name}</MenuButton>
                     <MenuList>
                         <MenuItem onClick={onOpen}>Create</MenuItem>
                         <MenuItem onClick={logout}>Logout</MenuItem>
