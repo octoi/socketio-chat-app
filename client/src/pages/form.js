@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Flex, Heading, Input, Spinner } from '@chakra-ui/react';
+import { Button, Container, Flex, Heading, Input, Spinner, useToast } from '@chakra-ui/react';
 import { loginUser, registerUser } from '../api/authFunctions';
 import { useHistory } from 'react-router-dom';
 import useAppContext from '../hooks/useAppContext';
@@ -14,6 +14,7 @@ export default function Form() {
 
     const { setUser, user } = useAppContext();
     const history = useHistory();
+    const toast = useToast();
 
     useEffect(() => {
         if (user) history.push("/");
@@ -37,7 +38,13 @@ export default function Form() {
         loginUser({ email: userEmail, password: userPassword }).then(data => {
             delete data?.password;
             setUser(data)
-        })
+        }).catch((msg) => {
+            toast({
+                status: "error",
+                description: msg ? "Your username or password is incorrect 😓" : "Oops something went wrong 🤐",
+                isClosable: true,
+            });
+        });
         setIsLoading(false)
     }
 
@@ -47,7 +54,14 @@ export default function Form() {
         registerUser(userData).then(() => {
             delete userData.password;
             setUser(userData)
-        })
+        }).catch((msg) => {
+            toast({
+                status: "error",
+                description: msg ? "Seems like there is an user with same email 😐" : "Oops something went wrong 🤐",
+                isClosable: true,
+                position: "top-right"
+            });
+        });
         setIsLoading(false)
     }
 
