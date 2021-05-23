@@ -14,6 +14,15 @@ export default function Form() {
         setIsRegisterForm(isRegister);
     }, []);
 
+    useEffect(() => {
+        if (userEmail.trim().length === 0 || userPassword.length < 6 || (isRegisterForm && userName.trim().length === 0)) {
+            setCanSubmit(false)
+            return;
+        }
+
+        setCanSubmit(true)
+    }, [userName, userEmail, userPassword, isRegisterForm]);
+
     const login = () => {
         alert("login")
     }
