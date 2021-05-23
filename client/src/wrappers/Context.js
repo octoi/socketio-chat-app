@@ -18,7 +18,7 @@ export function Context({ children }) {
         }
 
         let userFromCookie = cookie.get("user");
-        if (user) setUser(JSON.parse(userFromCookie));
+        if (userFromCookie) setUser(JSON.parse(userFromCookie));
     }, [user]);
 
     return (

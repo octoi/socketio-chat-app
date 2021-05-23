@@ -9,8 +9,8 @@ router.post('/user/signup', (req, res) => {
     let password = req.body.password;
 
     mongo.signUp(name, email, password)
-        .then(() => res.send('User created').status(200))
-        .catch(() => res.send("Failed to create user").status(404))
+        .then(() => res.send({ message: "User created", status: true }).status(200))
+        .catch(() => res.send({ message: "Failed to create user", status: false }).status(404))
 });
 
 router.post('/user/login', (req, res) => {
@@ -18,8 +18,8 @@ router.post('/user/login', (req, res) => {
     let password = req.body.password;
 
     mongo.login(email, password)
-        .then(user => res.send(user).status(200))
-        .catch(() => res.send("Failed").status(404))
+        .then(user => res.send({ message: user, status: true }).status(200))
+        .catch(() => res.send({ message: "Failed", status: false }).status(404))
 });
 
 // rooms
@@ -33,26 +33,26 @@ router.post('/room/create', (req, res) => {
     }
 
     mongo.createRoom(name, description, host)
-        .then(room => res.send(room).status(200))
-        .catch(() => res.send("Failed").status(404))
+        .then(room => res.send({ message: room, status: true }).status(200))
+        .catch(() => res.send({ message: "Failed", status: false }).status(404))
 });
 
 router.get('/room', (req, res) => {
     mongo.getAllRooms()
-        .then(rooms => res.send(rooms).status(200))
-        .catch(() => res.send("Failed").status(404))
+        .then(rooms => res.send({ message: rooms, status: true }).status(200))
+        .catch(() => res.send({ message: "Failed", status: false }).status(404))
 });
 
 router.get('/room/:id', (req, res) => {
     mongo.getOneRoom(req.params.id)
-        .then(room => res.send(room).status(200))
-        .catch(() => res.send("Failed").status(404))
+        .then(room => res.send({ message: room, status: true }).status(200))
+        .catch(() => res.send({ message: "Failed", status: false }).status(404))
 });
 
 router.delete('/room/:id', (req, res) => {
     mongo.deleteOneRoom(req.params.id, req.body.email)
-        .then(data => res.send(data).status(200))
-        .catch(() => res.send("Failed").status(404))
+        .then(data => res.send({ message: data, status: true }).status(200))
+        .catch(() => res.send({ message: "Failed", status: false }).status(404))
 });
 
 module.exports = router;
