@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Flex, Heading, Input } from '@chakra-ui/react';
 import { loginUser, registerUser } from '../api/authFunctions';
+import { useHistory } from 'react-router-dom';
+import useAppContext from '../hooks/useAppContext';
 
 export default function Form() {
     const [isRegisterForm, setIsRegisterForm] = useState(false);
@@ -9,12 +11,16 @@ export default function Form() {
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
+    const { setUser, user } = useAppContext();
+    const history = useHistory();
 
     useEffect(() => {
+        if (user) history.push("/");
+
         const urlParams = new URLSearchParams(window.location.search);
         const isRegister = urlParams.get("type") === "register";
         setIsRegisterForm(isRegister);
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (userEmail.trim().length === 0 || userPassword.length < 6 || (isRegisterForm && userName.trim().length === 0)) {
@@ -27,12 +33,16 @@ export default function Form() {
 
     const login = () => {
         loginUser({ email: userEmail, password: userPassword }).then(data => {
-            console.log(data)
+            delete data?.password;
+            setUser(data)
         })
     }
+
     const register = () => {
-        registerUser({ email: userEmail, password: userPassword, name: userName }).then(data => {
-            console.log(data)
+        const userData = { email: userEmail, password: userPassword, name: userName };
+        registerUser(userData).then(() => {
+            delete userData.password;
+            setUser(userData)
         })
     }
 
