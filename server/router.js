@@ -9,8 +9,8 @@ router.post('/user/signup', (req, res) => {
     let password = req.body.password;
 
     mongo.signUp(name, email, password)
-        .then(() => res.send({ messsage: "User created", status: true }).status(200))
-        .catch(() => res.send({ messsage: "Failed to create user", status: false }).status(404))
+        .then(() => res.send({ message: "User created", status: true }).status(200))
+        .catch(() => res.send({ message: "Failed to create user", status: false }).status(404))
 });
 
 router.post('/user/login', (req, res) => {
