@@ -1,4 +1,5 @@
 const { UserModel, ChatRoomModel } = require("./model");
+const bcrypt = require("bcrypt");
 
 const signUp = (name, email, password) => {
     return new Promise((resolve, reject) => {
@@ -7,8 +8,12 @@ const signUp = (name, email, password) => {
                 reject();
                 return;
             }
-            const user = new UserModel({ name, email, password });
-            user.save().then(() => resolve()).catch(reject);
+            bcrypt.hash(password, 10).then(hashedPassword => {
+                const user = new UserModel({ name, email, password: hashedPassword });
+                user.save().then(() => resolve()).catch(reject);
+            }).catch(() => {
+                reject();
+            })
         }).catch(() => {
             reject();
         })
@@ -18,8 +23,10 @@ const signUp = (name, email, password) => {
 const login = (email, password) => {
     return new Promise((resolve, reject) => {
         UserModel.findOne({ email }).then(user => {
-            if (user.password === password) resolve(user);
-            reject();
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (result) resolve(user);
+                else reject();
+            })
         }).catch(reject)
     });
 }
