@@ -5,6 +5,7 @@ export const ContextState = createContext();
 
 export function Context({ children }) {
     const [user, setUser] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
     const logout = () => {
         cookie.remove("user");
@@ -21,8 +22,16 @@ export function Context({ children }) {
         if (userFromCookie) setUser(JSON.parse(userFromCookie));
     }, [user]);
 
+    const sharedData = {
+        user,
+        setUser,
+        logout,
+        isLoading,
+        setIsLoading
+    }
+
     return (
-        <ContextState.Provider value={{ user, setUser, logout }}>
+        <ContextState.Provider value={sharedData}>
             {children}
         </ContextState.Provider>
     );
