@@ -6,7 +6,7 @@ export default function AuthProtected({ children }) {
     const history = useHistory();
 
     if (!user) {
-        history.push("/login")
+        history.push("/form")
     }
 
     return (
