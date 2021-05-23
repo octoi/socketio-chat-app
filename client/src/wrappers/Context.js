@@ -5,7 +5,6 @@ export const ContextState = createContext();
 
 export function Context({ children }) {
     const [user, setUser] = useState();
-    const [isLoading, setIsLoading] = useState(true);
 
     const logout = () => {
         cookie.remove("user");
@@ -26,8 +25,6 @@ export function Context({ children }) {
         user,
         setUser,
         logout,
-        isLoading,
-        setIsLoading
     }
 
     return (
