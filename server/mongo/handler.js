@@ -82,20 +82,23 @@ const joinRoom = (id, user) => {
     });
 }
 
-const leftRoom = (id, user) => {
+const leftRoom = (socketId) => {
     return new Promise(async (resolve, reject) => {
-        const room = await ChatRoomModel.findById(id);
+        getAllRooms().then(rooms => {
+            rooms.map(room => {
+                if (!room) {
+                    reject();
+                } else {
+                    let users = room.users;
+                    users = users.filter(roomUser => roomUser.socket !== socketId);
+                    room.users = users;
 
-        if (!room) {
-            reject();
-        } else {
-            let users = room.users;
-            users = users.filter(roomUser => roomUser.email !== user.email);
-            room.users = users;
+                    await room.save();
+                    resolve(room);
+                }
+            })
+        })
 
-            await room.save();
-            resolve(room);
-        }
 
     });
 }
