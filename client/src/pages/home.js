@@ -21,10 +21,6 @@ export default function Home() {
         const sock = socketIoClient(serverUrl, connectionOptions);
         setSocket(sock);
 
-        return () => {
-            socket?.off();
-        }
-
     }, [socket, setSocket, serverUrl]);
 
     return (
