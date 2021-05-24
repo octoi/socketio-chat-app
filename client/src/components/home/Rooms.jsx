@@ -1,9 +1,10 @@
 import React from 'react';
+import { Text } from '@chakra-ui/react';
 
 export default function Rooms() {
     return (
-        <div>
-
-        </div>
+        <section>
+            <Text fontSize="xl" color="grey">All Rooms</Text>
+        </section>
     )
 }
