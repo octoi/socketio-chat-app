@@ -1,17 +1,23 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, ModalHeader, ModalFooter } from '@chakra-ui/react';
 
 export default function Room({ room }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
+    const history = useHistory();
+
+    const joinRoom = () => {
+        history.push(`/chat/${room._id}`)
+    }
 
     return (
         <Flex background="#2D3748" width="100%" direction="column" mt={3} p={5} borderRadius={10}>
             <Heading size="md">{room.name}</Heading>
             <Text mt={3} color="gray.400">{room.description}</Text>
             <Flex width="100%" justifyContent="space-between" direction="row">
-                <Button mr={1} mt={5} width="100%" colorScheme="teal">Join Room</Button>
+                <Button mr={1} mt={5} width="100%" colorScheme="teal" onClick={joinRoom}>Join Room</Button>
                 <Button ml={1} mt={5} width="100%" onClick={onOpen}>View Users</Button>
             </Flex>
 
