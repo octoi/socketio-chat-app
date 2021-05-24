@@ -6,15 +6,26 @@ import { Container } from '@chakra-ui/react';
 
 export default function Home() {
     const { socket, setSocket } = useAppContext();
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     useEffect(() => {
         if (socket) return;
 
-        const serverUrl = process.env.REACT_APP_SERVER_URL;
-        const sock = socketIoClient(serverUrl, { transports: ["websocket"] });
+        let connectionOptions = {
+            "force new connection": true,
+            "reconnectionAttempts": "Infinity",
+            "timeout": 10000,
+            "transports": ["websocket"]
+        };
+
+        const sock = socketIoClient(serverUrl, connectionOptions);
         setSocket(sock);
 
-    }, [socket, setSocket]);
+        return () => {
+            socket?.off();
+        }
+
+    }, [socket, setSocket, serverUrl]);
 
     return (
         <Container marginTop="30px" maxW="container.xl">
