@@ -82,6 +82,24 @@ const joinRoom = (id, user) => {
     });
 }
 
+const leftRoom = (id, user) => {
+    return new Promise(async (resolve, reject) => {
+        const room = await ChatRoomModel.findById(id);
+
+        if (!room) {
+            reject();
+        } else {
+            let users = room.users;
+            users = users.filter(roomUser => roomUser.email !== user.email);
+            room.users = users;
+
+            await room.save();
+            resolve(room);
+        }
+
+    });
+}
+
 module.exports = {
     signUp,
     login,
@@ -90,4 +108,5 @@ module.exports = {
     getOneRoom,
     deleteOneRoom,
     joinRoom,
+    leftRoom
 }
