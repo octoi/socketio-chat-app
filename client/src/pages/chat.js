@@ -14,13 +14,13 @@ export default function Chat() {
             userData: user,
             roomId
         }
-        socket.emit("joinRoom", data, (res) => {
-            console.log(res)
+        socket?.emit("joinRoom", data, (res) => {
+            if (!res.status) {
+                alert(`You are in wrong place ${user?.name}`);
+                history.push("/")
+            }
         });
 
-        return () => {
-            console.log("unmount")
-        }
     }, [socket, history, roomId, user]);
 
     return (
