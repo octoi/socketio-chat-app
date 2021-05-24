@@ -6,13 +6,6 @@ export default function Room({ room }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
-    room.users = [
-        { name: "sample", email: "test@test.com" },
-        { name: "sample", email: "test@test.com" },
-        { name: "sample", email: "test@test.com" },
-        { name: "sample", email: "test@test.com" },
-    ]
-
     return (
         <Flex background="#2D3748" width="100%" direction="column" mt={3} p={5} borderRadius={10}>
             <Heading size="md">{room.name}</Heading>
