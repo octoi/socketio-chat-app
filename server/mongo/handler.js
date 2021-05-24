@@ -83,9 +83,9 @@ const joinRoom = (id, user) => {
 }
 
 const leftRoom = (socketId) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         getAllRooms().then(rooms => {
-            rooms.map(room => {
+            rooms.map(async (room) => {
                 if (!room) {
                     reject();
                 } else {
