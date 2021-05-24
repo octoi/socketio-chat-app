@@ -5,6 +5,7 @@ export const ContextState = createContext();
 
 export function Context({ children }) {
     const [user, setUser] = useState();
+    const [socket, setSocket] = useState();
 
     const logout = () => {
         cookie.remove("user");
@@ -25,6 +26,8 @@ export function Context({ children }) {
         user,
         setUser,
         logout,
+        socket,
+        setSocket
     }
 
     return (

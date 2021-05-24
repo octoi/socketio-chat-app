@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const socketIo = require("socket.io");
+const http = require("http");
 const cors = require("cors")
+
+const socketHandler = require("./socket/handler")
 const router = require("./router");
 
 const app = express();
@@ -8,6 +12,8 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 app.use("/", router);
+
+const server = http.createServer(app);
 
 const mongodbURL = process.env.MONGODB || "mongodb://localhost:27017/chatapp";
 mongoose.connect(mongodbURL, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
@@ -17,5 +23,9 @@ mongoose.connect(mongodbURL, { useNewUrlParser: true, useUnifiedTopology: true }
     process.exit(0);
 })
 
+const io = socketIo(server);
+
+io.on("connection", socketHandler);
+
 const port = process.env.PORT || 8000;
-app.listen(port, () => console.log(`[*] SERVER STARTED AT PORT ${port}`));
+server.listen(port, () => console.log(`[*] SERVER STARTED AT PORT ${port}`));

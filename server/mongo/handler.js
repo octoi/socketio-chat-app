@@ -82,6 +82,27 @@ const joinRoom = (id, user) => {
     });
 }
 
+const leftRoom = (socketId) => {
+    return new Promise((resolve, reject) => {
+        getAllRooms().then(rooms => {
+            rooms.map(async (room) => {
+                if (!room) {
+                    reject();
+                } else {
+                    let users = room.users;
+                    users = users.filter(roomUser => roomUser.socket !== socketId);
+                    room.users = users;
+
+                    await room.save();
+                    resolve(room);
+                }
+            })
+        })
+
+
+    });
+}
+
 module.exports = {
     signUp,
     login,
@@ -90,4 +111,5 @@ module.exports = {
     getOneRoom,
     deleteOneRoom,
     joinRoom,
+    leftRoom
 }
