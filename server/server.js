@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const socketIo = require("socket.io");
 const http = require("http");
 const cors = require("cors")
+
+const socketHandler = require("./socket/handler")
 const router = require("./router");
 
 const app = express();
@@ -23,9 +25,7 @@ mongoose.connect(mongodbURL, { useNewUrlParser: true, useUnifiedTopology: true }
 
 const io = socketIo(server);
 
-io.on("connection", socket => {
-    console.log(`${socket.id} connected`)
-})
+io.on("connection", socketHandler);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => console.log(`[*] SERVER STARTED AT PORT ${port}`));
