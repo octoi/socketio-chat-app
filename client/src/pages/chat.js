@@ -1,6 +1,8 @@
-import useAppContext from '../hooks/useAppContext';
 import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { Container } from '@chakra-ui/react';
+import useAppContext from '../hooks/useAppContext';
+import ChatHeader from '../components/chat/ChatHeader';
 
 export default function Chat() {
     const { roomid: roomId } = useParams();
@@ -24,8 +26,7 @@ export default function Chat() {
     }, [socket, history, roomId, user]);
 
     return (
-        <div>
-
-        </div>
+        <Container mt={10} maxW="container.xl">
+        </Container>
     )
 }
