@@ -35,8 +35,8 @@ export default function Chat() {
             {room && (
                 <div>
                     <ChatHeader roomName={room.name} />
-                    <ChatMsgContainer />
-                    <ChatForm />
+                    <ChatMsgContainer socket={socket} />
+                    <ChatForm socket={socket} />
                 </div>
             )}
         </Container>
