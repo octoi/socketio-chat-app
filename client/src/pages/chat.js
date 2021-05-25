@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Container } from '@chakra-ui/react';
 import useAppContext from '../hooks/useAppContext';
 import ChatHeader from '../components/chat/ChatHeader';
+import ChatMsgContainer from '../components/chat/ChatMsgContainer';
 
 export default function Chat() {
     const { roomid: roomId } = useParams();
@@ -31,7 +32,10 @@ export default function Chat() {
     return (
         <Container mt={10} maxW="container.xl">
             {room && (
-                <ChatHeader roomName={room.name} />
+                <div>
+                    <ChatHeader roomName={room.name} />
+                    <ChatMsgContainer />
+                </div>
             )}
         </Container>
     )
