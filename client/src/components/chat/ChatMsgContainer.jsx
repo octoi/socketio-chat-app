@@ -6,12 +6,12 @@ export default function ChatMsgContainer({ socket }) {
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        socket.on("messages", messages => setChats(messages));
+        socket.on("message", message => setChats([...chats, message]));
     }, [chats, socket]);
 
     return (
         <div style={{ height: "75vh", overflowX: "hidden", margin: "20px 0px" }}>
-            {chats.map(chat => <ChatBubble chat={chat} />)}
+            {chats.map((chat, id) => <ChatBubble key={id} chat={chat} />)}
         </div>
     )
 }
