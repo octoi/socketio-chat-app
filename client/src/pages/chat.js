@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Container } from '@chakra-ui/react';
 import useAppContext from '../hooks/useAppContext';
@@ -7,6 +7,7 @@ import ChatHeader from '../components/chat/ChatHeader';
 export default function Chat() {
     const { roomid: roomId } = useParams();
     const { socket, user } = useAppContext();
+    const [room, setRoom] = useState();
     const history = useHistory();
 
     useEffect(() => {
@@ -20,6 +21,8 @@ export default function Chat() {
             if (!res.status) {
                 alert(`You are in wrong place ${user?.name}`);
                 history.push("/")
+            } else {
+                setRoom(res.message);
             }
         });
 
@@ -27,6 +30,9 @@ export default function Chat() {
 
     return (
         <Container mt={10} maxW="container.xl">
+            {room && (
+                <ChatHeader roomName={room.name} />
+            )}
         </Container>
     )
 }
