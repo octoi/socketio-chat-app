@@ -20,5 +20,10 @@ module.exports = socket => {
             .catch(() => callback({ message: "No such room", status: false }))
     });
 
+    socket.on("message", data => {
+        socket.broadcast.emit("message", data.chat);
+        socket.emit("message", data.chat);
+    })
+
     socket.on('disconnect', () => leftRoom(socket.id));
 }
