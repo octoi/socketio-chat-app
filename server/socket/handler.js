@@ -7,7 +7,16 @@ module.exports = socket => {
         const { userData, roomId } = data;
         socket.join(roomId);
         joinRoom(roomId, { ...userData, socket: socket.id })
-            .then(roomData => callback({ message: roomData, status: true }))
+            .then(roomData => {
+                callback({ message: roomData, status: true })
+                socket.emit("message", {
+                    message: `Welcome ${userData.name} to ${roomData.name} 😀`,
+                    user: {
+                        name: "bot",
+                        email: "bot@chatapp"
+                    }
+                });
+            })
             .catch(() => callback({ message: "No such room", status: false }))
     });
 
