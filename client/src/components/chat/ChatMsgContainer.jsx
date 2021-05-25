@@ -1,53 +1,13 @@
-import React from 'react';
-import useAppContext from '../../hooks/useAppContext';
+import { useState, useEffect } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
+import useAppContext from '../../hooks/useAppContext';
 
-export default function ChatMsgContainer() {
+export default function ChatMsgContainer({ socket }) {
+    const [chats, setChats] = useState([]);
 
-    const chats = [
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "someone",
-                email: "someone@email.com"
-            }
-        },
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "user",
-                email: "user@email.com"
-            }
-        },
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "someone",
-                email: "someone@email.com"
-            }
-        },
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "user",
-                email: "user@email.com"
-            }
-        },
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "someone",
-                email: "someone@email.com"
-            }
-        },
-        {
-            message: "Hello this is a message",
-            user: {
-                name: "user",
-                email: "user@email.com"
-            }
-        },
-    ]
+    useEffect(() => {
+        socket.on("messages", messages => setChats(messages));
+    }, [chats, socket]);
 
     return (
         <div style={{ height: "75vh", overflowX: "hidden", margin: "20px 0px" }}>
