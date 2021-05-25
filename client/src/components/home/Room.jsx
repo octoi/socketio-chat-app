@@ -18,7 +18,7 @@ export default function Room({ room }) {
             <Text mt={3} color="gray.400">{room.description}</Text>
             <Flex width="100%" justifyContent="space-between" direction="row">
                 <Button mr={1} mt={5} width="100%" colorScheme="teal" onClick={joinRoom}>Join Room</Button>
-                <Button ml={1} mt={5} width="100%" onClick={onOpen}>View Users</Button>
+                <Button ml={1} mt={5} width="100%" onClick={onOpen}>View Host</Button>
             </Flex>
 
             <Modal
@@ -28,28 +28,13 @@ export default function Room({ room }) {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Room Users</ModalHeader>
+                    <ModalHeader>Room Host</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Button
-                            onClick={() => toast({ isClosable: true, title: room.host.email, status: "info", position: "top-right", description: "Room host" })}
-                            mb={5}
-                            variant="solid"
-                            width="100%"
-                        >
-                            <Text>{room.host.name}</Text>
-                        </Button>
-                        {room.users.map((user, id) => (
-                            <Button
-                                onClick={() => toast({ isClosable: true, title: user.email, status: "info", position: "top-right", description: "Room user" })}
-                                mt={2}
-                                width="100%"
-                                key={id}
-                                variant="outline"
-                            >
-                                <Text>{user.name}</Text>
-                            </Button>
-                        ))}
+                        <Flex direction="column" alignItems="center" justifyContent="center">
+                            <Text fontWeight="bold" fontSize="xl">{room.host.name}</Text>
+                            <Text>{room.host.email}</Text>
+                        </Flex>
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={onClose}>Close</Button>
