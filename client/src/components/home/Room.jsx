@@ -14,7 +14,7 @@ export default function Room({ room }) {
     const toast = useToast();
 
     const { user } = useAppContext();
-    const amIHost = room.host.email === user.email;
+    const amIHost = room?.host.email === user?.email;
 
     const joinRoom = () => {
         history.push(`/chat/${room._id}`)
