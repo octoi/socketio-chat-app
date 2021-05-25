@@ -6,16 +6,28 @@ module.exports = socket => {
     socket.on('joinRoom', (data, callback) => {
         const { userData, roomId } = data;
         socket.join(roomId);
+
+        socket.broadcast.emit("message", {
+            message: `${userData.name} has joined the gang 🥳`,
+            user: {
+                name: "bot",
+                email: "Official chatapp bot"
+            }
+        });
+
         joinRoom(roomId, { ...userData, socket: socket.id })
             .then(roomData => {
+
                 callback({ message: roomData, status: true })
+
                 socket.emit("message", {
                     message: `Welcome ${userData.name} to ${roomData.name} 😀`,
                     user: {
                         name: "bot",
-                        email: "bot@chatapp"
+                        email: "Official chatapp bot"
                     }
                 });
+
             })
             .catch(() => callback({ message: "No such room", status: false }))
     });
@@ -25,5 +37,15 @@ module.exports = socket => {
         socket.emit("message", data.chat);
     })
 
-    socket.on('disconnect', () => leftRoom(socket.id));
+    socket.on('disconnect', () => {
+        leftRoom(socket.id).then(userData => {
+            socket.broadcast.emit("message", {
+                message: `${userData?.name} left the chat 😭`,
+                user: {
+                    name: "bot",
+                    email: "Official chatapp bot"
+                }
+            });
+        })
+    });
 }
