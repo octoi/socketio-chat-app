@@ -36,7 +36,7 @@ export default function Chat() {
                 <div>
                     <ChatHeader roomName={room.name} />
                     <ChatMsgContainer socket={socket} />
-                    <ChatForm socket={socket} />
+                    <ChatForm socket={socket} roomId={roomId} />
                 </div>
             )}
         </Container>
