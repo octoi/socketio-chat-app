@@ -1,17 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import useAppContext from '../../hooks/useAppContext';
 
 export default function ChatMsgContainer({ socket }) {
     const [chats, setChats] = useState([]);
+    const scrollToObject = useRef();
 
     useEffect(() => {
-        socket.on("message", message => setChats([...chats, message]));
+        socket.on("message", message => {
+            setChats([...chats, message]);
+            scrollToObject.current.scrollIntoView({ behavior: 'smooth' });
+        });
     }, [chats, socket]);
 
     return (
         <div style={{ height: "75vh", overflowX: "hidden", margin: "20px 0px" }}>
             {chats.map((chat, id) => <ChatBubble key={id} chat={chat} />)}
+            <span ref={scrollToObject}></span>
         </div>
     )
 }
