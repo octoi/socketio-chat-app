@@ -13,7 +13,8 @@ export default function ChatForm({ socket, roomId }) {
                 message: msg,
                 user
             }
-        })
+        });
+        setMsg("")
     }
 
     return (
