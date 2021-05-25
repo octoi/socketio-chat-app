@@ -8,6 +8,10 @@ export default function Rooms() {
 
     useEffect(() => {
         fetchRooms().then(allRooms => {
+            allRooms.map(room => {
+                delete room.users
+                return room;
+            })
             setRooms(allRooms.reverse());
         }).catch(() => alert("err"))
     }, []);

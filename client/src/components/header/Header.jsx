@@ -21,7 +21,7 @@ export default function Header() {
                         </MenuList>
                     </Menu>
                 )}
-                <NewRoom isOpen={isOpen} onClose={onClose} />
+                <NewRoom isOpen={isOpen} onClose={onClose} user={user} />
             </Container>
         </div>
     )

@@ -14,7 +14,6 @@ const chatRoomSchema = new Schema({
         name: String,
         email: String
     },
-    chats: []
 });
 
 const UserModel = model('users', userSchema);
