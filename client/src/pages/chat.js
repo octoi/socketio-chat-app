@@ -4,6 +4,7 @@ import { Container } from '@chakra-ui/react';
 import useAppContext from '../hooks/useAppContext';
 import ChatHeader from '../components/chat/ChatHeader';
 import ChatMsgContainer from '../components/chat/ChatMsgContainer';
+import ChatForm from '../components/chat/ChatForm';
 
 export default function Chat() {
     const { roomid: roomId } = useParams();
@@ -35,6 +36,7 @@ export default function Chat() {
                 <div>
                     <ChatHeader roomName={room.name} />
                     <ChatMsgContainer />
+                    <ChatForm />
                 </div>
             )}
         </Container>
