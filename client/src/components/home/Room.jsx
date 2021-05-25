@@ -1,11 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, ModalHeader, ModalFooter } from '@chakra-ui/react';
 
 export default function Room({ room }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const toast = useToast();
     const history = useHistory();
 
     const joinRoom = () => {
